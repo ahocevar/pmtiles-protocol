@@ -1,0 +1,42 @@
+{
+  "name": "pmtiles-protocol",
+  "version": "1.0.0",
+  "description": "pmtiles:// urls for fetch() and XMLHttpRequest",
+  "type": "module",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ahocevar/pmtiles-protocol.git"
+  },
+  "keywords": [
+    "pmtiles",
+    "mvt",
+    "tiles",
+    "protomaps",
+    "mapbox",
+    "openlayers",
+    "ol-mapbox-style",
+    "mapblibre"
+  ],
+  "author": "Andreas Hocevar <andreas.hocevar@gmail.com>",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/ahocevar/pmtiles-protocol/issues"
+  },
+  "homepage": "https://github.com/ahocevar/pmtiles-protocol#readme",
+  "scripts": {
+    "test": "eslint **/*.js && prettier **/*.js --check && tsc --noEmit",
+    "prepublishOnly": "tsc"
+  },
+  "dependencies": {
+    "pmtiles": "^3.2.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@types/eslint__js": "^8.42.3",
+    "eslint": "^9.13.0",
+    "globals": "^15.11.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3"
+  }
+}
