@@ -1,6 +1,6 @@
 # pmtiles-protocol
 
-Provides `fetch` and `XMLHttpRequest` versions that support urls starting with `pmtiles://`, returning the respective TileJSON or tiles. It is meant to be used in browser applications.
+This package makes it easy to work with [Protomaps](https://protomaps.com) [PMTiles](https://docs.protomaps.com/pmtiles/) directly in the browser. It provides `fetch` and `XMLHttpRequest` versions that support urls starting with `pmtiles://`, returning the respective TileJSON or tiles. It is meant to be used in browser applications.
 
 ## Supported URLs
 
