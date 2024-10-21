@@ -16,13 +16,7 @@ This package makes it easy to work with [Protomaps](https://protomaps.com) [PMTi
 
 ## How to use
 
-`pmtiles-protocol` can be through a dedicated `fetch()` function or a dedicated `XMLHttpRequest` replacement:
-
-```js
-import { fetch, XMLHttpRequest } from 'pmtiles-protocol';
-```
-
-`fetch()` and `XMLHttpRequest` are now available in the module scope. If the module scope is not enough, global overrides for `fetch()` and `XMLHttpRequest` are also available:
+The global overrides for `fetch()` and `XMLHttpRequest` are the easiest way to use `pmtiles-protocol`:
 
 ```js
 import { register } from 'pmtiles-protocol';
@@ -30,10 +24,18 @@ import { register } from 'pmtiles-protocol';
 const unregister = register();
 ```
 
+Now every request url that starts with `pmtiles://` for anything in your web application that uses `fetch()` or `XMLHttpRequest` will go through [pmtiles](https://npmjs.com/package/pmtiles).
+
 To restore the original global `fetch()` and `XMLHttpRequest` versions, call
 
 ```js
 unregister();
+```
+
+If global overrides are not desired, `pmtiles-protocol` also provides a dedicated `fetch()` function and a dedicated `XMLHttpRequest` replacement:
+
+```js
+import { fetch, XMLHttpRequest } from 'pmtiles-protocol';
 ```
 
 ## Examples
