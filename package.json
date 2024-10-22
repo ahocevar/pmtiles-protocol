@@ -1,6 +1,6 @@
 {
   "name": "pmtiles-protocol",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "pmtiles:// urls for fetch() and XMLHttpRequest",
   "type": "module",
   "main": "index.js",
