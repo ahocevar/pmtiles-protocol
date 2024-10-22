@@ -62,14 +62,14 @@ logs the TileJSON from the PMTiles file at `path/to/mytiles.pmtiles` (relative t
 
 ### In a Mapbox Style document
 
-The `pmtiles` source below will use the TileJSON and tiles from the relative url `path/to/mytiles.pmtiles`:
+The `pmtiles` source below will use the TileJSON and tiles from `https://example.com/mytiles.pmtiles`:
 
 ```json
 {
   "sources": {
     "pmtiles": {
       "type": "vector",
-      "url": "pmtiles://path/to/mytiles.pmtiles"
+      "url": "pmtiles://https://example.com/mytiles.pmtiles"
     }
   }
 }
