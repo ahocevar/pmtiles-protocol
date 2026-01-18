@@ -24,18 +24,18 @@ import { register } from 'pmtiles-protocol';
 const unregister = register();
 ```
 
-Now every request url that starts with `pmtiles://` for anything in your web application that uses `fetch()` or `XMLHttpRequest` will go through [pmtiles](https://npmjs.com/package/pmtiles).
+Now every request url that starts with `pmtiles://` for anything in your web application that uses `fetch()` or `XMLHttpRequest` will go through [pmtiles](https://npmjs.com/package/pmtiles). Also, setting the `src` attribute of an `Image` or `HTMLImageElement` to a `pmtiles://` url will load the image from the PMTiles archive.
 
-To restore the original global `fetch()` and `XMLHttpRequest` versions, call
+To restore the original global `fetch()` and `XMLHttpRequest` versions, and the original `src` setter on `HTMLImageElement`, call
 
 ```js
 unregister();
 ```
 
-If global overrides are not desired, `pmtiles-protocol` also provides a dedicated `fetch()` function and a dedicated `XMLHttpRequest` replacement:
+If global overrides are not desired, `pmtiles-protocol` also provides a dedicated `fetch()` function, a dedicated `XMLHttpRequest` replacement, and a dedicated `Image` constructor:
 
 ```js
-import { fetch, XMLHttpRequest } from 'pmtiles-protocol';
+import { fetch, XMLHttpRequest, Image } from 'pmtiles-protocol';
 ```
 
 ## Examples
@@ -60,6 +60,14 @@ xhr.onload = () => {
 
 logs the TileJSON from the PMTiles file at `path/to/mytiles.pmtiles` (relative to `window.location.href`) to the console.
 
+### Image
+
+```js
+const img = new Image();
+img.src = 'pmtiles://https://example.com/mytiles.pmtiles/0/0/0.png';
+document.body.appendChild(img);
+```
+
 ### In a Mapbox Style document
 
 The `pmtiles` source below will use the TileJSON and tiles from `https://example.com/mytiles.pmtiles`:
@@ -77,29 +85,6 @@ The `pmtiles` source below will use the TileJSON and tiles from `https://example
 
 ## Limitations
 
-This package won't add support for PMTiles when loading images by simply setting the `src` of an `Image` or `HTTPImageElement`. However, using an object url, the following would work:
-
-```js
-const img = new Image();
-fetch('pmtiles://path/to/mytiles.pmtiles/0/0/0.png')
-  .then((response) => response.blob())
-  .then((blob) => {
-    const objectUrl = URL.createObjectURL(blob);
-    img.onload = () => {
-      console.log('Image loaded');
-      URL.revokeObjectURL(objectUrl);
-    };
-    img.onerror = () => {
-      console.error('Image load error');
-      URL.revokeObjectURL(objectUrl);
-    };
-    img.src = objectUrl;
-  })
-  .catch((error) => {
-    console.error('Fetch error:', error);
-  });
-```
-
 ### fetch()
 
 No known limitations.
@@ -112,3 +97,13 @@ The limitations below only apply when `XMLHttpRequest` is used with a `pmtiles:/
 - The only methods that act on the PMTiles file are `open()` and `send()`.
 - Only the `response` and `responseText` properties are supported.
 - Only the `200` and `404` status codes are used.
+
+### Image
+
+The limitations below only apply when `Image` or `HTMLImageElement` is used with a `pmtiles://` url.
+
+- **HTML Attributes**: Setting the `src` attribute via HTML markup (e.g., `<img src="pmtiles://...">`) or `setAttribute` (e.g. `img.setAttribute('src', ...)`) is not supported, because the browser's native network loader handles these before the library's JavaScript interception can run. You must assign to the `src` property (e.g. `img.src = ...`) for it to work.
+- **CSS**: `pmtiles://` URLs are not supported in CSS `background-image` or other CSS properties.
+- **Property Read-back**: When assigning a `pmtiles://` URL to `img.src`, reading `img.src` immediately after will not return the `pmtiles://` URL. Instead, it will return the previous value or the `blob:` URL once the image has loaded. This also applies when inspecting `img.src` inside an `onload` or `onerror` handler.
+- **srcset**: The `srcset` attribute is not supported.
+- **Error Handling**: If loading fails, an `error` event is dispatched on the image element. Note that the error is also logged to `console.error`.
