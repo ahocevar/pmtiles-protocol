@@ -11,8 +11,9 @@
     "lib": ["dom", "es2022"],
     "moduleResolution": "node",
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "outDir": "."
   },
-  "include": ["**/*.js"],
-  "exclude": ["node_modules"]
+  "include": ["index.js"],
+  "exclude": ["node_modules", "**/*.d.ts"]
 }

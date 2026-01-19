@@ -1,1 +1,11 @@
-node_modules/
+.DS_Store
+.github
+.gitignore
+.prettierrc
+.vscode
+eslint.config.mjs
+node_modules
+scripts
+test
+tsconfig.json
+vitest.config.js
