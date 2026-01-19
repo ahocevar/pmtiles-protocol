@@ -1,6 +1,6 @@
 # pmtiles-protocol
 
-This package makes it easy to work with [Protomaps](https://protomaps.com) [PMTiles](https://docs.protomaps.com/pmtiles/) directly in the browser. It provides `fetch` and `XMLHttpRequest` versions that support urls starting with `pmtiles://`, returning the respective TileJSON or tiles. It is meant to be used in browser applications.
+This package makes it easy to work with [Protomaps](https://protomaps.com) [PMTiles](https://docs.protomaps.com/pmtiles/) directly in the browser. It provides `fetch` and `XMLHttpRequest` versions as well as an `Image` or `HTMLImageElement` setter for `src` that support urls starting with `pmtiles://`, returning the respective TileJSON or tiles. It is meant to be used in browser applications.
 
 ## Supported URLs
 
@@ -12,11 +12,11 @@ This package makes it easy to work with [Protomaps](https://protomaps.com) [PMTi
 ### Tiles
 
 - `pmtiles://https://example.com/path/to/mytiles.pmtiles/{z}/{x}/{y}.mvt` (absolute)
-- `pmtiles://path/to/mytiles.pmtiles/{z}/{x}/{y}.mvt` (relative to `window.location.href`)
+- `pmtiles://path/to/mytiles.pmtiles/{z}/{x}/{y}.png` (relative to `window.location.href`)
 
 ## How to use
 
-The global overrides for `fetch()` and `XMLHttpRequest` are the easiest way to use `pmtiles-protocol`:
+The global overrides for `fetch()`, `XMLHttpRequest` and `Image` or `HTMLImageElment`'s `src` setter are the easiest way to use `pmtiles-protocol`:
 
 ```js
 import { register } from 'pmtiles-protocol';
@@ -26,7 +26,7 @@ const unregister = register();
 
 Now every request url that starts with `pmtiles://` for anything in your web application that uses `fetch()` or `XMLHttpRequest` will go through [pmtiles](https://npmjs.com/package/pmtiles). Also, setting the `src` attribute of an `Image` or `HTMLImageElement` to a `pmtiles://` url will load the image from the PMTiles archive.
 
-To restore the original global `fetch()` and `XMLHttpRequest` versions, and the original `src` setter on `HTMLImageElement`, call
+To restore the original global `fetch()` and `XMLHttpRequest` versions, and the original `src` setter on `Image` and `HTMLImageElement`, call
 
 ```js
 unregister();
